@@ -1,0 +1,23 @@
+version: "3"
+services:
+    grafana:
+        container_name: grafana
+        image: "grafana/grafana:latest"
+        depends_on:
+            - influxdb
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./provisioning/:/etc/grafana/provisioning/
+        restart: always
+    influxdb:
+        container_name: influxdb
+        image: influxdb
+        ports:
+            - "8086:8086"
+        restart: always
+    telegraf:
+        container_name: telegraf
+        image: telegraf
+        volumes:
+            - ./telegraf.conf:/etc/telegraf/telegraf.conf
